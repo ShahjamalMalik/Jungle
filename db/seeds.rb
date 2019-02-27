@@ -137,7 +137,7 @@ cat3.products.create!({
 
 puts "Finding or Creating Users ..."
 
-user1 = User.create(name:"anisa", email:"anisa@hotmail.com", password_digest:"hello")
+user1 = User.create(name:"shahjamal", email:"shahjoo@gmail.com", password_digest:"hello")
 user2 = User.create(name:"ben", email:"ben@hotmail.com", password_digest:"hi")
 
 puts "Re-creating Reviews..."
