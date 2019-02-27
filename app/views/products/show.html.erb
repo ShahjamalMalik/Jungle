@@ -31,8 +31,11 @@
   <% @reviews.reverse_each do |review| %>
     <h3> <%= review.description %> </h3>
     <h3> <%= review.rating %> </h3>
+    <% if current_user %>
     <%= button_to "delete", product_review_path(product_id: @product.id, id: review.id), :method => :delete %>
     <% end %>
+    <% end %>  
+    <% puts current_user %> 
   </article>
   <% if current_user %>
   <%= form_for([@product, @review]) do |f| %>
