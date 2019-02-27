@@ -2,7 +2,9 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @line_items = @order.line_items
   end
+
 
   def create
     charge = perform_stripe_charge
@@ -10,10 +12,14 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
+      UserMailer.confirmation_email(order).deliver_now
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, flash: { error: order.errors.full_messages.first }
     end
+
+
+    
 
   rescue Stripe::CardError => e
     redirect_to cart_path, flash: { error: e.message }
@@ -22,7 +28,6 @@ class OrdersController < ApplicationController
   private
 
   def empty_cart!
-    # empty hash means no products in cart :)
     update_cart({})
   end
 
@@ -52,7 +57,8 @@ class OrdersController < ApplicationController
         total_price: product.price * quantity
       )
     end
-    order.save!
+    if order.save!
+    end
     order
   end
 

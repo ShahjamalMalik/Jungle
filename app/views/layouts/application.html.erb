@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <title>Jungle</title>
@@ -14,6 +13,13 @@
     <%= yield %>
   </main>
 
+  <% if current_user %>
+  Signed in as <%= current_user.name %> | <%= link_to "Logout", '/logout' %>
+  <% else %>
+  <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
+  <% end %>
+
+  <%= yield %>
   <%= yield :end_of_body %>
 </body>
 </html>
